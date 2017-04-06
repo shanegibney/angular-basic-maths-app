@@ -1,0 +1,31 @@
+.form-rounded {
+border-radius: 2rem;
+}
+.question {
+  /*text-align: right;*/
+  margin-right: 0;
+  font-size: 20;
+}
+input {
+
+}
+
+div {
+/*display:inline-block;
+margin-left:5px;
+height:100px;
+width:100px;*/
+/*border:2px solid black;*/
+/*border-radius:100%*/
+}
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+}
+.details {
+  text-align: center;
+}
