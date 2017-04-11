@@ -29,3 +29,8 @@ width:100px;*/
 .details {
   text-align: center;
 }
+
+input[type="text"]
+{
+    font-size:48px;
+}
