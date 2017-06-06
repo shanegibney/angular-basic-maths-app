@@ -3,61 +3,8 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  // templateUrl: './app.component.html',
-  template: `<div class="container">
-    <div class="row">
-      <!-- <h2>Guess the Number!</h2>
-      <p class="well lead">Guess the computer generated random number between 1 and 1000.</p>
-      <label>Your Guess: </label>
-      <input type="number" [value]="guess" (input)="guess = $event.target.value"/>
-      <button (click)="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
-      <button (click)="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
-      <div>
-        <p *ngIf="deviation<0" class="alert alert-warning">Your guess is higher.</p>
-        <p *ngIf="deviation>0" class="alert alert-warning">Your guess is lower.</p>
-        <p *ngIf="deviation===0" class="alert alert-success">Yes! That's it.</p>
-
-      </div>
-      <p class="text-info">No of guesses:
-        <span class="badge">{{noOfTries}}</span>
-      </p> -->
-      <h2>You do the Math!...</h2>
-      <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p>
-      <div *ngIf="show===true">
-      <p>need checkboxes here!</p>
-      <!-- <input class="form-control form-rounded" type="checkbox" [value]="operation" (input)="operation = $event.target.value" /> Addition -->
-      <p><input [(ngModel)]="addition" type="checkbox"/> <i class="fa fa-plus"></i> addition</p>
-      <p><input [(ngModel)]="subtraction" type="checkbox"/> <i class="fa fa-minus"></i> subtraction</p>
-      <p><input [(ngModel)]="multiplication" type="checkbox"/> <i class="fa fa-times"></i> multiplication</p>
-      <p><input [(ngModel)]="division" type="checkbox"/> <strong>&#247;</strong> division</p>
-
-      <p><button (click)="toggle()" class="btn btn-warning btn-sm">Submit</button></p>
-      </div>
-      <div class="col-md-6" style="text-align:right;">
-        <!-- Checkbox value: <input type="checkbox" [value]="operation" (input)="operation = $event.target.value"/> -->
-        <span class="question"><font size="10">{{num1}} + {{num2}} = </font></span>
-      </div>
-      <div class="col-md-3" style="vertical-align:center;">
-         <input class="form-control form-rounded" type="number" style="width:100px; height:50px;" [value]="answer" (input)="answer = $event.target.value" />
-      </div>
-      <div class="co-md-3">
-
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12" style="text-align:center;" >
-        <button (click)="doCalculate()" class="btn btn-warning btn-sm">Submit</button>
-        <button (click)="init()" class="btn btn-warning btn-sm">Restart</button>
-
-        <!-- <p *ngIf="result===true" class="alert alert-warning">That is the correct answer.</p> -->
-        <p *ngIf="result===false" class="alert alert-warning"><i class="fa wrong fa-times fa-3x" aria-hidden="true"></i> <font size="6">Have another go!</font></p>
-        <p *ngIf="result===true" class="alert alert-warning"><i class="fa correct fa-check fa-3x" aria-hidden="true"></i> Well done!</p>
-        <span *ngIf="total!=0" class="question"><font size="10">{{ score }} correct out of {{ total }}</font></span>
-        <!-- <p>Checked value is {{ operation }}</p> -->
-      </div>
-    </div>
-  </div>
-  `,
+  templateUrl: './app.component.html',
+  // template: `<div class="container">....</div>`,
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
@@ -79,6 +26,9 @@ export class AppComponent {
   multiplication: boolean = false;
   division: boolean = false;
   selectedOperations: boolean[];
+  num: number;
+  op: string[] = ["+", "-", "*", "/"];
+  symbol: string;
 
   constructor() {
     this.initializeGame();
@@ -102,12 +52,14 @@ export class AppComponent {
     this.multiplication = false;
     this.division = false;
     this.show = false;
+    this.num = null;
+    this.operation = [true, false, false, false];
   }
 
-  verifySettings() {
-    this.deviation = this.original - this.guess;
-    this.noOfTries = this.noOfTries + 1;
-  }
+  // verifySettings() {
+  //   this.deviation = this.original - this.guess;
+  //   this.noOfTries = this.noOfTries + 1;
+  // }
 
   toggle(){
     this.show =! this.show;
@@ -129,7 +81,7 @@ export class AppComponent {
     this.score = 0;
     this.answer = null;
     this.result = null;
-    console.log(this.operation[0]);
+    // console.log(this.operation[0]);
     this.num1 = Math.floor((Math.random() * 10) + 1);
     this.num2 = Math.floor((Math.random() * 10) + 1);
   }
@@ -146,6 +98,25 @@ export class AppComponent {
     this.answer = null;
     this.num1 = Math.floor((Math.random() * 10) + 1);
     this.num2 = Math.floor((Math.random() * 10) + 1);
-    console.log(this.operation);
+    // console.log(this.operation);
+    // console.log("blah " + this.getOperator());
+    for(var i=0; i<this.op.length; i++){
+      console.log("In the for loop " + this.op[i]);
+    }
+  }
+
+  getOperator() {
+    this.num = Math.floor((Math.random() * 4) + 1);
+    console.log("HelloOne" + this.num);
+    if(this.operation[this.num]){
+      console.log("HelloTwo");
+      this.symbol = this.op[this.num-1];
+      return this.symbol;
+    } else {
+      console.log("HelloThree");
+      this.getOperator();
+    }
+    // console.log("random num is " + this.num);
+
   }
 }
