@@ -307,7 +307,7 @@ module.exports = "<div class=\"container\">\n  <div class=\"row\">\n    <!-- <h2
 /***/ 220:
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  my-new-component works!\n</p>\n"
+module.exports = "<p>\n  my-new-component works!.\n</p>\n"
 
 /***/ }),
 
