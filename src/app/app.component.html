@@ -1,55 +1,82 @@
-<div class="container">
-  <div class="row">
-    <!-- <h2>Guess the Number!</h2>
-    <p class="well lead">Guess the computer generated random number between 1 and 1000.</p>
-    <label>Your Guess: </label>
-    <input type="number" [value]="guess" (input)="guess = $event.target.value"/>
-    <button (click)="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
-    <button (click)="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
-    <div>
-      <p *ngIf="deviation<0" class="alert alert-warning">Your guess is higher.</p>
-      <p *ngIf="deviation>0" class="alert alert-warning">Your guess is lower.</p>
-      <p *ngIf="deviation===0" class="alert alert-success">Yes! That's it.</p>
+<div class="jumbotron">
+  <div class="container">
+    <div class="row">
+      <h2>Have a Go Hero Maths!</h2>
+    </div>
 
-    </div>
-    <p class="text-info">No of guesses:
-      <span class="badge">{{noOfTries}}</span>
-    </p> -->
-    <h2>You do the Math!...</h2>
-    <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p>
-    <div *ngIf="show===true">
-      <p>need checkboxes here!</p>
-      <!-- <input class="form-control form-rounded" type="checkbox" [value]="operation" (input)="operation = $event.target.value" /> Addition -->
-      <p><input [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
-      <p><input [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
-      <p><input [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
-      <p><input [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
+    <div class="row">
+      <div class="col-md-3">
+        <!-- <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p> -->
+        <!-- <div *ngIf="show===true"> -->
+        <div>
+          <h3>Select operators:</h3>
+          <!-- <input class="form-control form-rounded" type="checkbox" [value]="operation" (input)="operation = $event.target.value" /> Addition -->
+          <p><input (change)="toggle()" [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
+          <p><input (change)="toggle()" [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
+          <p><input (change)="toggle()" [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
+          <p><input (change)="toggle()" [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
 
-      <p><button (click)="toggle()" class="btn btn-warning btn-sm">Submit</button></p>
-    </div>
-    <div class="col-md-6" style="text-align:right;">
-      <!-- Checkbox value: <input type="checkbox" [value]="operation" (input)="operation = $event.target.value"/> -->
-      <span class="question"><font size="10">{{num1}} + {{num2}} = </font></span>
-    </div>
-    <div class="col-md-3" style="vertical-align:center;">
-      <input class="form-control form-rounded" type="number" style="width:100px; height:50px;" [value]="answer" (input)="answer = $event.target.value" />
-    </div>
-    <div class="co-md-3">
+          <!-- <p><button (click)="toggle()" class="btn btn-warning btn-sm">Submit</button></p> -->
+        </div>
+      </div>
 
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12" style="text-align:center;">
-      <button (click)="doCalculate()" class="btn btn-warning btn-sm">Submit</button>
-      <button (click)="init()" class="btn btn-warning btn-sm">Restart</button>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-6" style="text-align:right;">
+            <!-- Checkbox value: <input type="checkbox" [value]="operation" (input)="operation = $event.target.value"/> -->
+            <span class="question"><font size="10">{{num1}} {{ op[index] }} {{num2}} = </font></span>
+          </div>
+          <div class="col-md-6" style="vertical-align:center;">
+            <input class="form-control form-rounded" type="number" style="width:100px; height:50px; font-size:40px;" [value]="answer" (input)="answer = $event.target.value" />
+          </div>
+        </div>
 
-      <!-- <p *ngIf="result===true" class="alert alert-warning">That is the correct answer.</p> -->
-      <p *ngIf="result===false" class="alert alert-warning"><i class="fa wrong fa-times fa-3x" aria-hidden="true"></i>
-        <font size="6">Have another go!</font>
-      </p>
-      <p *ngIf="result===true" class="alert alert-warning"><i class="fa correct fa-check fa-3x" aria-hidden="true"></i> Well done!</p>
-      <span *ngIf="total!=0" class="question"><font size="10">{{ score }} correct out of {{ total }}</font></span>
-      <!-- <p>Checked value is {{ operation }}</p> -->
+        <div class="row">
+          <div class="col-md-12" style="text-align:center;">
+            <button (click)="doCalculate()" class="btn btn-warning btn-sm">Submit</button>
+            <button (click)="init()" class="btn btn-warning btn-sm">Restart</button>
+          </div>
+        </div>
+        <div class="row">
+          <!-- <p *ngIf="result===true" class="alert alert-warning">That is the correct answer.</p> -->
+          <div class="col-md-12" *ngIf="result===false" style="text-align:center;" class="alert alert-warning"><i class="fa wrong fa-times fa-3x" aria-hidden="true"></i>
+            <font size="6">Have another go!</font>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12" *ngIf="result===true" style="text-align:center;" class="alert alert-warning"><i class="fa correct fa-check fa-3x" aria-hidden="true"></i> Well done!</div>
+        </div>
+        <div class="row">
+          <div *ngIf="total!=0" style="text-align:center;" class="question">
+            <font size="10">{{ score }} correct out of {{ total }}</font>
+            <!-- <p>Checked value is {{ operation }}</p> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="row">
+          <p>real time stats and accumulated results will go here</p>
+        </div>
+      </div>
     </div>
+    <div class="row panel panel-primary">
+      <div class=" col-md-12 panel panel-heading">
+        <h3>To do:</h3>
+      </div>
+      <div class="col-md-12 panel panel-body">
+        <ol>
+          <li><del>Correct scoring of first attempt</del></li>
+          <li>Create status by operator to be displayed on left. Keep score for each operator</li>
+          <li>Some way to input range for each operator</li>
+          <li><del>For substraction disallow problems with negative answers</del></li>
+          <li>For division only allow problems without decimal answers</li>
+          <li>Enlarge problem and submit and restart buttons.</li>
+          <li>Create pdf of stats at any time</li>
+          <li>Email stats to several email addresses</li>
+          <li>Correct behaviour when no operators are selected</li>
+        </ol>
+      </div>
+    </div>
+
   </div>
 </div>

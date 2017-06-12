@@ -34,3 +34,7 @@ input[type="text"]
 {
     font-size:48px;
 }
+
+.well {
+    background: rgba(0, 0, 0, 0.4);
+}
