@@ -38,3 +38,12 @@ input[type="text"]
 .well {
     background: rgba(0, 0, 0, 0.4);
 }
+/*start of new css*/
+.centreit {
+  text-align: center;
+}
+
+.settings {
+  background: grey;
+  border: 5px solid black;
+}

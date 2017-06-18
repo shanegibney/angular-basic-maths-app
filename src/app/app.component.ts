@@ -8,201 +8,200 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  // title = 'app works!';
-  deviation: number;
-  noOfTries: number;
-  original: number;
-  guess: number;
-  num1: number;
-  num2: number;
-  result: boolean;
+  increment: number = 0;
+  num1: number = 1;
+  num2: number = 10;
+  num : number;
+  result: boolean = null;
+  addmin1: number = 1;
+  addmax1: number = 10;
+  addmin2: number = 1;
+  addmax2: number = 10;
+  submin1: number = 1;
+  submax1: number = 10;
+  submin2: number = 1;
+  submax2: number = 10;
+  multmin1: number = 1;
+  multmax1: number = 10;
+  multmin2: number = 1;
+  multmax2: number = 10;
+  divmin1: number = 1;
+  divmax1: number = 10;
+  divmin2: number = 1;
+  divmax2: number = 10;
+  addtotal: number = 0;
+  subtotal: number = 0;
+  multtotal: number = 0;
+  divtotal: number = 0;
   answer: number;
-  score: number;
-  total: number;
+  score: number = 0;
+  addscore: number = 0;
+  subscore: number = 0;
+  multscore: number = 0;
+  divscore: number = 0;
+  total: number = 0;
   operation: boolean[];
-  index: number = 0;
-  show: boolean;
+  show: boolean = true;
   addition: boolean = true;
   subtraction: boolean = false;
   multiplication: boolean = false;
   division: boolean = false;
-  selectedOperations: boolean[];
-  num: number = 1;
-  op: string[] = ["+", "-", "*", "/"];
-  symbol: string;
-  setAdd: boolean;
-  ignore: boolean = true;
+  op: string;
 
   constructor() {
-    console.log("constructor()");
-    this.initialize();
-    // this.refresh();
+    this.makeadd();
   }
 
-  initialize() {
-    console.log("initialize()");
-    this.num1 = Math.floor((Math.random() * 10) + 1);
-    this.num2 = Math.floor((Math.random() * 10) + 1);
-    this.result = null;
-    this.answer = null;
-    this.score = 0;
-    this.total = 0;
-    this.operation = [];
-    this.selectedOperations = [];
-    this.addition = true;
-    this.subtraction = false;
-    this.multiplication = false;
-    this.division = false;
-    this.show = false;
-    this.refresh();
+  makeadd(){
+
+    if(!this.addition && !this.subtraction && !this.multiplication && !this.division){
+      this.addition = true;
+      alert("At least one operator must be chosen. Setting addition to on.");
+    }
+
+    console.log("makeadd()" + ": this.addition = " + this.addition);
+    if(this.addition){
+      this.additionproblem();
+      console.log("@makeadd: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
+    } else {
+      this.makesub();
+    }
   }
+
+  makesub(){
+    console.log("makesub(): " + ": this.subtraction = " + this.subtraction);
+    if(this.subtraction){
+      this.subtractionproblem();
+      console.log("@makesub: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
+    } else {
+      console.log("here!");
+      this.makemult();
+    }
+  }
+
+  makemult(){
+    console.log("makemult()" + ": this.multiplication = " + this.multiplication);
+    if(this.multiplication){
+      this.multiplicationproblem();
+      console.log("@makediv: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
+    } else {
+      this.makediv();
+    }
+  }
+
+   makediv(){
+     console.log("makediv()" + ": this.division = " + this.division);
+    if(this.division){
+      this.divisionproblem();
+      console.log("@makemult: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
+    } else {
+      this.makeadd();
+    }
+  }
+
+additionproblem(){
+ this.result = false;
+ this.op = "+";
+ this.num1 = this.generate(this.addmin1, this.addmax1);
+ this.num2 = this.generate(this.addmin2, this.addmax2);
+ console.log("additionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+}
+
+subtractionproblem(){
+this.result = false;
+this.op = "-";
+this.num1 = this.generate(this.submin1, this.submax1);
+this.num2 = this.generate(this.submin2, this.submax2);
+console.log("subtractionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+}
+
+multiplicationproblem(){
+this.op = "*";
+this.num1 = this.generate(this.multmin1, this.multmax1);
+this.num2 = this.generate(this.multmin2, this.multmax2);
+console.log("multiplicationproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+}
+
+divisionproblem(){
+this.op = "/";
+this.num1 = this.generate(this.divmin1, this.divmax1);
+this.num2 = this.generate(this.divmin2, this.divmax2);
+console.log("divisionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+}
+
+generate(min,max){
+  max = +max;
+  min = +min;
+  return Math.round(Math.random() * (max -  min) + min);
+}
+
+check(){
+
+  if(this.op == "+"){
+    console.log("check(+): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 + this.num2){
+      this.result = true;
+      console.log("minus this.result = " + this.result);
+      this.score++;
+      this.addscore++;
+    } else {
+      this.result = false;
+    }
+    this.answer = null;
+    this.addtotal++;
+    this.total++;
+    this.makesub();
+  }
+
+  if(this.op == "-"){
+    console.log("check(-): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 - this.num2){
+      this.result = true;
+      console.log("minus this.result = " + this.result);
+      this.score++;
+      this.subscore++;
+    } else {
+      this.result = false;
+    }
+    this.answer = null;
+    this.subtotal++;
+    this.total++;
+    console.log("there!");
+    this.makemult();
+  }
+
+  if(this.op == "*"){
+    console.log("check(*): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 * this.num2){
+      this.result = true;
+      this.score++;
+      this.multscore++;
+    } else {
+      this.result = false;
+    }
+    this.answer = null;
+    this.multtotal++;
+    this.total++;
+    this.makediv();
+  }
+
+  if(this.op == "/"){
+    console.log("check(/): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 / this.num2){
+      this.result = true;
+      this.score++;
+      this.divscore++;
+    } else {
+      this.result = false;
+    }
+    this.answer = null;
+    this.divtotal++;
+    this.total++;
+    this.makeadd();
+  }
+ }
 
   toggle(){
-    console.log("toggle()");
-    // this.show =! this.show;
-    console.log("this.addition=" + this.addition);
-    console.log("this.subtraction=" + this.subtraction);
-    console.log("this.multiplication=" + this.multiplication);
-    console.log("this.division=" + this.division);
-    this.operation = [this.addition, this.subtraction, this.multiplication, this.division];
-    console.log("---------");
-    console.log("this.operation[0]=" + this.operation[0]);
-    console.log("this.operation[1]=" + this.operation[1]);
-    console.log("this.operation[2]=" + this.operation[2]);
-    console.log("this.operation[3]=" + this.operation[3]);
-    for(var i=0; i<this.operation.length; i++){
-      console.log("operation[" + i + "]=" + this.operation[i]);
-    }
-    // if(!this.operation[0] && !this.operation[1] && !this.operation[2] && !this.operation[3]){
-    if(!this.addition && !this.subtraction && !this.multiplication && !this.division){
-      console.log("I am before alert");
-      alert('You must choose at least one operator. Setting addition to on.');
-      console.log("I am after alert");
-      this.addition = true;
-      // this.operation[0] = true;
-      // this.setAdd = false;
-      console.log("In if(setAdd)");
-    }
-    this.refresh();
-  }
-
-    // refresh() the question but keep scoring
-    refresh(){
-      console.log("refresh()");
-      this.answer = null;
-      this.result = null;
-      this.num1 = Math.floor((Math.random() * 10) + 1);
-      this.num2 = Math.floor((Math.random() * 10) + 1);
-      // this.getOperator();
-    }
-
-  // init() is called on restart
-  init(){
-    console.log("init()");
-    this.total = 0;
-    this.score = 0;
-    this.answer = null;
-    this.result = null;
-    // this.num1 = Math.floor((Math.random() * 10) + 1);
-    // this.num2 = Math.floor((Math.random() * 10) + 1);
-    this.refresh();
-  }
-
-  doCalculate(){
-    console.log("doCalculate()");
-    this.operation = [this.addition, this.subtraction, this.multiplication, this.division];
-    console.log("-------------------");
-    console.log("index = " + this.index);
-    console.log("this.operation[0] is " + this.operation[0]);
-    console.log("this.operation[1] is " + this.operation[1]);
-    console.log("this.operation[2] is " + this.operation[2]);
-    console.log("this.operation[3] is " + this.operation[3]);
-
-    if(this.index==0 && this.operation[this.index]){
-      if(this.answer == this.num1 + this.num2){
-          this.result = true;
-          this.score = this.score + 1;
-        } else {
-          this.result = false;
-        }
-    }
-
-    if(this.index==1 && this.operation[this.index]){
-      if(this.answer == this.num1 - this.num2){
-          this.result = true;
-          this.score = this.score + 1;
-        } else {
-          this.result = false;
-        }
-    }
-
-    if(this.index==2 && this.operation[this.index]){
-      if(this.answer == this.num1 * this.num2){
-          this.result = true;
-          this.score = this.score + 1;
-        } else {
-          this.result = false;
-        }
-    }
-
-    if(this.index==3 && this.operation[this.index]){
-      if(this.answer == this.num1 / this.num2){
-          this.result = true;
-          this.score = this.score + 1;
-        } else {
-          this.result = false;
-        }
-    }
-
-    this.total = this.total + 1;
-    this.answer = null;
-    this.num1 = Math.floor((Math.random() * 10) + 1);
-    this.num2 = Math.floor((Math.random() * 10) + 1);
-    // for(var i=0; i<this.op.length; i++){
-    //   console.log("In the for loop " + this.op[i]);
-    // }
-    this.ignore = true;
-    this.getOperator();
-  }
-
-  getOperator() {
-    console.log("getOperator()");
-    if(this.ignore){
-    this.index = Math.floor((Math.random() * 4));
-}
-    //prevent a negative answer with subtraction
-    if(this.index == 1 && this.num1 < this.num2){
-      this.num1 = Math.floor((Math.random() * 10) + 1);
-      this.num2 = Math.floor((Math.random() * 10) + 1);
-      this.getOperator();
-    }
-
-    console.log(this.num1 + " % " + this.num2 + " = " + this.num1 % this.num2);
-    //prevent a decimal, 0 or 1 answer with division
-    if(this.index == 3 && (this.num1 % this.num2 != 0) ){
-      console.log("i am in decimal prevent code " + this.num1 + "/" + this.num2 + " = " + this.num1 / this.num2)
-      if((this.num1 / this.num2 == 1) || (this.num2 == 1.0)){
-        // this.num1 = Math.floor((Math.random() * 50) + 1);
-        // this.num2 = Math.floor((Math.random() * 50) + 1);
-        this.ignore = false;
-      this.getOperator;
-      }
-
-  }
-
-    console.log("index in getOperator = " + this.index);
-    console.log("I am just inside the getOperator() this.op[" + this.index + "]" + " = " + this.op[this.index] + ", this.operation[" + this.index + "] = " + this.operation[this.index]);
-    if(this.operation[this.index]){
-      console.log("I am in the if, returning this.index = " + this.index);
-      return this.index;
-    } else {
-      if(!this.operation[0] && !this.operation[1] && !this.operation[2] && !this.operation[3]){
-        console.log("None are true");
-        this.refresh();
-      }
-      console.log("I am in the else");
-      this.ignore = true;
-      this.getOperator();
-    }
+    this.show =! this.show;
   }
 }

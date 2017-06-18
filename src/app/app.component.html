@@ -1,82 +1,188 @@
-<div class="jumbotron">
-  <div class="container">
-    <div class="row">
+<div class="container">
+  <div class="row">
+    <div class="md-col-12">
       <h2>Have a Go Hero Maths!</h2>
     </div>
-
-    <div class="row">
-      <div class="col-md-3">
-        <!-- <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p> -->
-        <!-- <div *ngIf="show===true"> -->
-        <div>
-          <h3>Select operators:</h3>
-          <!-- <input class="form-control form-rounded" type="checkbox" [value]="operation" (input)="operation = $event.target.value" /> Addition -->
-          <p><input (change)="toggle()" [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
-          <p><input (change)="toggle()" [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
-          <p><input (change)="toggle()" [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
-          <p><input (change)="toggle()" [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
-
-          <!-- <p><button (click)="toggle()" class="btn btn-warning btn-sm">Submit</button></p> -->
-        </div>
-      </div>
-
-      <div class="col-md-6">
-        <div class="row">
-          <div class="col-md-6" style="text-align:right;">
-            <!-- Checkbox value: <input type="checkbox" [value]="operation" (input)="operation = $event.target.value"/> -->
-            <span class="question"><font size="10">{{num1}} {{ op[index] }} {{num2}} = </font></span>
-          </div>
-          <div class="col-md-6" style="vertical-align:center;">
-            <input class="form-control form-rounded" type="number" style="width:100px; height:50px; font-size:40px;" [value]="answer" (input)="answer = $event.target.value" />
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-12" style="text-align:center;">
-            <button (click)="doCalculate()" class="btn btn-warning btn-sm">Submit</button>
-            <button (click)="init()" class="btn btn-warning btn-sm">Restart</button>
-          </div>
-        </div>
-        <div class="row">
-          <!-- <p *ngIf="result===true" class="alert alert-warning">That is the correct answer.</p> -->
-          <div class="col-md-12" *ngIf="result===false" style="text-align:center;" class="alert alert-warning"><i class="fa wrong fa-times fa-3x" aria-hidden="true"></i>
-            <font size="6">Have another go!</font>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12" *ngIf="result===true" style="text-align:center;" class="alert alert-warning"><i class="fa correct fa-check fa-3x" aria-hidden="true"></i> Well done!</div>
-        </div>
-        <div class="row">
-          <div *ngIf="total!=0" style="text-align:center;" class="question">
-            <font size="10">{{ score }} correct out of {{ total }}</font>
-            <!-- <p>Checked value is {{ operation }}</p> -->
-          </div>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="row">
-          <p>real time stats and accumulated results will go here</p>
-        </div>
-      </div>
-    </div>
-    <div class="row panel panel-primary">
-      <div class=" col-md-12 panel panel-heading">
-        <h3>To do:</h3>
-      </div>
-      <div class="col-md-12 panel panel-body">
-        <ol>
-          <li><del>Correct scoring of first attempt</del></li>
-          <li>Create status by operator to be displayed on left. Keep score for each operator</li>
-          <li>Some way to input range for each operator</li>
-          <li><del>For substraction disallow problems with negative answers</del></li>
-          <li>For division only allow problems without decimal answers</li>
-          <li>Enlarge problem and submit and restart buttons.</li>
-          <li>Create pdf of stats at any time</li>
-          <li>Email stats to several email addresses</li>
-          <li>Correct behaviour when no operators are selected</li>
-        </ol>
-      </div>
-    </div>
-
   </div>
+
+  <div class="row">
+    <div class="col-md-12">
+
+      <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p>
+      <div *ngIf="show===true">
+        <div class="col-md-12">
+          <div class="row">
+            <div class="col-md-4">
+              <h3>Operators:</h3>
+            </div>
+            <div class="col-md-4">
+              <h3>First Number:</h3>
+            </div>
+            <div class="col-md-4 ">
+              <h3>Second Number:</h3>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4 ">
+
+            </div>
+            <div class="col-md-2 ">
+              <h4>Min</h4>
+            </div>
+            <div class="col-md-2 ">
+              <h4>Max</h4>
+            </div>
+            <div class="col-md-2 ">
+              <h4>Min</h4>
+            </div>
+            <div class="col-md-2 ">
+              <h4>Max</h4>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <p><input [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
+            </div>
+            <div class="col-md-2 ">
+              <input class="form-control " type="number" placeholder="3" style="width:80px; height:25px; font-size:20px;" [value]="addmin1" (input)="addmin1 = $event.target.value" [disabled]="!addition" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax1" (input)="addmax1 = $event.target.value" [disabled]="!addition" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmin2" (input)="addmin2 = $event.target.value" [disabled]="!addition" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax2" (input)="addmax2 = $event.target.value" [disabled]="!addition" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <p><input [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
+            </div>
+            <div class="col-md-2 ">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin1" (input)="submin1 = $event.target.value" [disabled]="!subtraction" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax1" (input)="submax1 = $event.target.value" [disabled]="!subtraction" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin2" (input)="submin2 = $event.target.value" [disabled]="!subtraction" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax2" (input)="submax2 = $event.target.value" [disabled]="!subtraction" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <p><input [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
+            </div>
+            <div class="col-md-2 ">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin1" (input)="multmin1 = $event.target.value" [disabled]="!multiplication" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax1" (input)="multmax1 = $event.target.value" [disabled]="!multiplication" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin2" (input)="multmin2 = $event.target.value" [disabled]="!multiplication" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax2" (input)="multmax2 = $event.target.value" [disabled]="!multiplication" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <p><input [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
+            </div>
+            <div class="col-md-2 ">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin1" (input)="divmin1 = $event.target.value" [disabled]="!division" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax1" (input)="divmax1 = $event.target.value" [disabled]="!division" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin2" (input)="divmin2 = $event.target.value" [disabled]="!division" />
+            </div>
+            <div class="col-md-2">
+              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax2" (input)="divmax2 = $event.target.value" [disabled]="!division" />
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <p><button (click)="makeadd()" class="btn btn-warning btn-sm">Submit</button></p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6" style="text-align:right;">
+      <!-- Checkbox value: <input type="checkbox" [value]="operation" (input)="operation = $event.target.value"/> -->
+      <span class="question"><font size="10">{{ num1 }} {{ op }} {{ num2 }} = </font></span>
+    </div>
+    <div class="col-md-6" style="vertical-align:center;">
+      <input class="form-control form-rounded" type="number" style="width:100px; height:50px; font-size:40px;" [value]="answer" (input)="answer = $event.target.value" />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" style="text-align:center;">
+      <button (click)="check()" class="btn btn-warning btn-sm">Check</button>
+      <button (click)="restart()" class="btn btn-warning btn-sm">Restart</button>
+    </div>
+  </div>
+
+  <!-- <div class="row" *ngIf="total>0">
+    <div class="col-md-12" *ngIf="result===false" style="text-align:center;" class="alert alert-warning"><i class="fa wrong fa-times fa-3x" aria-hidden="true"></i>
+      <font size="6">Have another go!</font>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" *ngIf="result===true" style="text-align:center;" class="alert alert-warning"><i class="fa correct fa-check fa-3x" aria-hidden="true"></i> Well done!</div>
+  </div> -->
+
+  <div class="row">
+    <div *ngIf="total!=0" style="text-align:center;" class="question">
+      <font size="10">{{ score }} correct out of {{ total }}</font>
+      <!-- <p>Checked value is {{ operation }}</p> -->
+    </div>
+  </div>
+
+  <div class="row" *ngIf="total>0">
+    <p>Problems solved: {{ score }} correct out of {{ total }}</p>
+    <p *ngIf="addscore>0">Addition problems correct: {{ addscore }} out of {{ addtotal }}</p>
+    <p *ngIf="subscore>0">Subtraction problems correct: {{ subscore }} out of {{ subtotal }}</p>
+    <p *ngIf="multscore>0">Multiplication problems correct: {{ multscore }} out of {{ multtotal }}</p>
+    <p *ngIf="divscore>0">Division problems correct: {{ divscore }} out of {{ divtotal }}</p>
+  </div>
+
+
+  <!-- <div class="row panel panel-primary">
+    <div class=" col-md-12 panel panel-heading">
+      <h3>To do:</h3>
+    </div>
+    <div class="col-md-12 panel panel-body">
+      <ol>
+        <li><del>Correct scoring of first attempt</del></li>
+        <li>Create status by operator to be displayed on left. Keep score for each operator</li>
+        <li>Some way to input range for each operator</li>
+        <li><del>For substraction disallow problems with negative answers</del></li>
+        <li>For division only allow problems without decimal answers</li>
+        <li>Enlarge problem and submit and restart buttons.</li>
+        <li>Create pdf of stats at any time</li>
+        <li>Email stats to several email addresses</li>
+        <li>Correct behaviour when no operators are selected</li>
+      </ol>
+    </div>
+  </div> -->
 </div>
