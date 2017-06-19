@@ -44,6 +44,13 @@ input[type="text"]
 }
 
 .settings {
-  background: grey;
+  border-radius: 8px;
+  background: lightgrey;
   border: 2px solid grey;
+}
+
+.totals {
+  border-radius: 8px;
+  background: lightblue;
+  border: 2px solid lightgrey;
 }

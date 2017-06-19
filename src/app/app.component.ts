@@ -4,23 +4,11 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  // template: `<div class="container">....</div>`,
-  // styleUrls: ['./app.component.css']
-  styles: [
-  `
-  .settings {
-    border-radius: 8px;
-    background: lightgrey;
-    border: 2px solid grey;
-  }
-  `
-  ]
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  increment: number = 0;
   num1: number = 1;
   num2: number = 10;
-  num : number;
   result: boolean = null;
   addmin1: number = 1;
   addmax1: number = 10;
@@ -50,20 +38,17 @@ export class AppComponent {
   divscore: number = 0;
   total: number = 0;
   operation: boolean[];
+  problems: { num1: number, op: string, num2: number, answer: number, result: boolean}[] = [];
   show: boolean = true;
   addition: boolean = true;
   subtraction: boolean = false;
   multiplication: boolean = false;
   division: boolean = false;
   op: string;
+  negativeanswers: boolean = true;
 
   constructor() {
     this.makeadd();
-    this.test();
-  }
-
-  test(){
-    console.log("one");
   }
 
   makeadd(){
@@ -72,75 +57,71 @@ export class AppComponent {
       alert("At least one operator must be chosen. Setting addition to on.");
     }
 
-    console.log("makeadd()" + ": this.addition = " + this.addition);
     if(this.addition){
       this.additionproblem();
-      console.log("@makeadd: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
     } else {
       this.makesub();
     }
   }
 
   makesub(){
-    console.log("makesub(): " + ": this.subtraction = " + this.subtraction);
     if(this.subtraction){
       this.subtractionproblem();
-      console.log("should stop here");
-      console.log("@makesub: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
     } else {
-      console.log("here!");
       this.makemult();
     }
   }
 
   makemult(){
-    console.log("makemult()" + ": this.multiplication = " + this.multiplication);
     if(this.multiplication){
       this.multiplicationproblem();
-      console.log("@makediv: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
     } else {
       this.makediv();
     }
   }
 
    makediv(){
-     console.log("makediv()" + ": this.division = " + this.division);
     if(this.division){
       this.divisionproblem();
-      console.log("@makemult: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
     } else {
       this.makeadd();
     }
   }
 
 additionproblem(){
- this.result = false;
- this.op = "+";
- this.num1 = this.generate(this.addmin1, this.addmax1);
- this.num2 = this.generate(this.addmin2, this.addmax2);
- console.log("additionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+   this.op = "+";
+   this.num1 = this.generate(this.addmin1, this.addmax1);
+   this.num2 = this.generate(this.addmin2, this.addmax2);
 }
 
 subtractionproblem(){
-this.result = false;
-this.op = "-";
-this.num1 = this.generate(this.submin1, this.submax1);
-this.num2 = this.generate(this.submin2, this.submax2);
-console.log("subtractionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+  this.op = "-";
+  this.num1 = this.generate(this.submin1, this.submax1);
+  this.num2 = this.generate(this.submin2, this.submax2);
+
+  // disallow negative answers if checked
+  if(this.negativeanswers){
+    if(this.num1 < this.num2){
+      this.subtractionproblem();
+    }
+  }
+
 }
 
 multiplicationproblem(){
 this.op = "*";
 this.num1 = this.generate(this.multmin1, this.multmax1);
 this.num2 = this.generate(this.multmin2, this.multmax2);
-console.log("multiplicationproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
 }
 
 divisionproblem(){
 this.op = "/";
 this.num1 = this.generate(this.divmin1, this.divmax1);
 this.num2 = this.generate(this.divmin2, this.divmax2);
-console.log("divisionproblem(): this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+console.log("this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", modulus: num1/num2 = " + this.num1%this.num2);
+if(this.num1%this.num2!=0){
+  this.divisionproblem();
+}
 }
 
 generate(min,max){
@@ -150,8 +131,10 @@ generate(min,max){
 }
 
 check(){
+  if(this.answer==null){
+    alert("You did not submit an answer. This will be marked as incorrect.");
+  }
   if(this.op == "/"){
-    console.log("check(/): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
     if(this.answer == this.num1 / this.num2){
       this.result = true;
       this.score++;
@@ -159,6 +142,7 @@ check(){
     } else {
       this.result = false;
     }
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
     this.answer = null;
     this.divtotal++;
     this.total++;
@@ -167,7 +151,6 @@ check(){
   }
 
   if(this.op == "*"){
-    console.log("check(*): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
     if(this.answer == this.num1 * this.num2){
       this.result = true;
       this.score++;
@@ -175,6 +158,7 @@ check(){
     } else {
       this.result = false;
     }
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
     this.answer = null;
     this.multtotal++;
     this.total++;
@@ -183,43 +167,81 @@ check(){
   }
 
   if(this.op == "-"){
-    console.log("check(-): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
     if(this.answer == this.num1 - this.num2){
       this.result = true;
-      console.log("minus this.result = " + this.result);
       this.score++;
       this.subscore++;
     } else {
       this.result = false;
     }
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
     this.answer = null;
     this.subtotal++;
     this.total++;
-    console.log("there!");
     this.makemult();
     return;
   }
 
   if(this.op == "+"){
-    console.log("check(+): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
     if(this.answer == this.num1 + this.num2){
       this.result = true;
-      console.log("minus this.result = " + this.result);
       this.score++;
       this.addscore++;
     } else {
       this.result = false;
     }
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
     this.answer = null;
     this.addtotal++;
     this.total++;
     this.makesub();
     return;
   }
-  console.log("Do I get called?");
  }
 
   toggle(){
     this.show =! this.show;
+  }
+
+  restart(){
+    // num1: number = 1;
+    // num2: number = 10;
+    this.result = null;
+    // addmin1: number = 1;
+    // addmax1: number = 10;
+    // addmin2: number = 1;
+    // addmax2: number = 10;
+    // submin1: number = 1;
+    // submax1: number = 10;
+    // submin2: number = 1;
+    // submax2: number = 10;
+    // multmin1: number = 1;
+    // multmax1: number = 10;
+    // multmin2: number = 1;
+    // multmax2: number = 10;
+    // divmin1: number = 1;
+    // divmax1: number = 10;
+    // divmin2: number = 1;
+    // divmax2: number = 10;
+    this.addtotal = 0;
+    this.subtotal = 0;
+    this.multtotal = 0;
+    this.divtotal = 0;
+    // answer: number;
+    this.score = 0;
+    this.addscore = 0;
+    this.subscore = 0;
+    this.multscore = 0;
+    this.divscore = 0;
+    this.total = 0;
+    // operation: boolean[];
+    this.problems = [];
+    // show: boolean = true;
+    this.addition = true;
+    this.subtraction = false;
+    this.multiplication = false;
+    this.division = false;
+    // op: string;
+    this.negativeanswers = true;
   }
 }
