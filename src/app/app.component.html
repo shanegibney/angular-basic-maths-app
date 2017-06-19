@@ -6,121 +6,121 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12" [ngClass]="{'settings': show }">
 
-      <p><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p>
+      <p style="margin-top: 10px; margin-left: 16px;"><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button></p>
       <div *ngIf="show===true">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-md-4">
-              <h3>Operators:</h3>
+        <div>
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-4">
+                <h3>Operators:</h3>
+              </div>
+              <div class="col-md-4">
+                <h3>First Number:</h3>
+              </div>
+              <div class="col-md-4 ">
+                <h3>Second Number:</h3>
+              </div>
             </div>
-            <div class="col-md-4">
-              <h3>First Number:</h3>
+            <div class="row">
+              <div class="col-md-4 ">
+
+              </div>
+              <div class="col-md-2 ">
+                <h4>Minimum</h4>
+              </div>
+              <div class="col-md-2 ">
+                <h4>Maximum</h4>
+              </div>
+              <div class="col-md-2 ">
+                <h4>Minimum</h4>
+              </div>
+              <div class="col-md-2 ">
+                <h4>Maximum</h4>
+              </div>
             </div>
-            <div class="col-md-4 ">
-              <h3>Second Number:</h3>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p><input [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
+              </div>
+              <div class="col-md-2 ">
+                <input class="form-control " type="number" placeholder="3" style="width:80px; height:25px; font-size:20px;" [value]="addmin1" (input)="addmin1 = $event.target.value" [disabled]="!addition" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax1" (input)="addmax1 = $event.target.value" [disabled]="!addition" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmin2" (input)="addmin2 = $event.target.value" [disabled]="!addition" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax2" (input)="addmax2 = $event.target.value" [disabled]="!addition" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p><input [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
+              </div>
+              <div class="col-md-2 ">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin1" (input)="submin1 = $event.target.value" [disabled]="!subtraction" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax1" (input)="submax1 = $event.target.value" [disabled]="!subtraction" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin2" (input)="submin2 = $event.target.value" [disabled]="!subtraction" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax2" (input)="submax2 = $event.target.value" [disabled]="!subtraction" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p><input [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
+              </div>
+              <div class="col-md-2 ">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin1" (input)="multmin1 = $event.target.value" [disabled]="!multiplication" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax1" (input)="multmax1 = $event.target.value" [disabled]="!multiplication" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin2" (input)="multmin2 = $event.target.value" [disabled]="!multiplication" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax2" (input)="multmax2 = $event.target.value" [disabled]="!multiplication" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <p><input [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
+              </div>
+              <div class="col-md-2 ">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin1" (input)="divmin1 = $event.target.value" [disabled]="!division" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax1" (input)="divmax1 = $event.target.value" [disabled]="!division" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin2" (input)="divmin2 = $event.target.value" [disabled]="!division" />
+              </div>
+              <div class="col-md-2">
+                <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax2" (input)="divmax2 = $event.target.value" [disabled]="!division" />
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <p><button (click)="makeadd()" class="btn btn-warning btn-sm">Submit</button></p>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-4 ">
-
-            </div>
-            <div class="col-md-2 ">
-              <h4>Min</h4>
-            </div>
-            <div class="col-md-2 ">
-              <h4>Max</h4>
-            </div>
-            <div class="col-md-2 ">
-              <h4>Min</h4>
-            </div>
-            <div class="col-md-2 ">
-              <h4>Max</h4>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <p><input [(ngModel)]="addition" type="checkbox" /> <i class="fa fa-plus"></i> addition</p>
-            </div>
-            <div class="col-md-2 ">
-              <input class="form-control " type="number" placeholder="3" style="width:80px; height:25px; font-size:20px;" [value]="addmin1" (input)="addmin1 = $event.target.value" [disabled]="!addition" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax1" (input)="addmax1 = $event.target.value" [disabled]="!addition" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmin2" (input)="addmin2 = $event.target.value" [disabled]="!addition" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="addmax2" (input)="addmax2 = $event.target.value" [disabled]="!addition" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <p><input [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
-            </div>
-            <div class="col-md-2 ">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin1" (input)="submin1 = $event.target.value" [disabled]="!subtraction" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax1" (input)="submax1 = $event.target.value" [disabled]="!subtraction" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submin2" (input)="submin2 = $event.target.value" [disabled]="!subtraction" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="submax2" (input)="submax2 = $event.target.value" [disabled]="!subtraction" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <p><input [(ngModel)]="multiplication" type="checkbox" /> <i class="fa fa-times"></i> multiplication</p>
-            </div>
-            <div class="col-md-2 ">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin1" (input)="multmin1 = $event.target.value" [disabled]="!multiplication" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax1" (input)="multmax1 = $event.target.value" [disabled]="!multiplication" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmin2" (input)="multmin2 = $event.target.value" [disabled]="!multiplication" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="multmax2" (input)="multmax2 = $event.target.value" [disabled]="!multiplication" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-4">
-              <p><input [(ngModel)]="division" type="checkbox" /> <strong>&#247;</strong> division</p>
-            </div>
-            <div class="col-md-2 ">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin1" (input)="divmin1 = $event.target.value" [disabled]="!division" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax1" (input)="divmax1 = $event.target.value" [disabled]="!division" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmin2" (input)="divmin2 = $event.target.value" [disabled]="!division" />
-            </div>
-            <div class="col-md-2">
-              <input class="form-control " type="number" style="width:80px; height:25px; font-size:20px;" [value]="divmax2" (input)="divmax2 = $event.target.value" [disabled]="!division" />
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-12">
-              <p><button (click)="makeadd()" class="btn btn-warning btn-sm">Submit</button></p>
-            </div>
-          </div>
-
         </div>
       </div>
-
     </div>
   </div>
 
@@ -130,7 +130,7 @@
       <span class="question"><font size="10">{{ num1 }} {{ op }} {{ num2 }} = </font></span>
     </div>
     <div class="col-md-6" style="vertical-align:center;">
-      <input class="form-control form-rounded" type="number" style="width:100px; height:50px; font-size:40px;" [value]="answer" (input)="answer = $event.target.value" />
+      <input class="form-control form-rounded" type="number" style="width:100px; height:50px; font-size:40px; margin-top: 10px;" [value]="answer" (input)="answer = $event.target.value" />
     </div>
   </div>
 

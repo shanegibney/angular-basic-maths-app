@@ -5,7 +5,16 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-root',
   templateUrl: './app.component.html',
   // template: `<div class="container">....</div>`,
-  styleUrls: ['./app.component.css']
+  // styleUrls: ['./app.component.css']
+  styles: [
+  `
+  .settings {
+    border-radius: 8px;
+    background: lightgrey;
+    border: 2px solid grey;
+  }
+  `
+  ]
 })
 export class AppComponent {
   increment: number = 0;
@@ -50,10 +59,14 @@ export class AppComponent {
 
   constructor() {
     this.makeadd();
+    this.test();
+  }
+
+  test(){
+    console.log("one");
   }
 
   makeadd(){
-
     if(!this.addition && !this.subtraction && !this.multiplication && !this.division){
       this.addition = true;
       alert("At least one operator must be chosen. Setting addition to on.");
@@ -72,6 +85,7 @@ export class AppComponent {
     console.log("makesub(): " + ": this.subtraction = " + this.subtraction);
     if(this.subtraction){
       this.subtractionproblem();
+      console.log("should stop here");
       console.log("@makesub: num1 = " + this.num1 + " num2 = " + this.num2 + ", op = " + this.op);
     } else {
       console.log("here!");
@@ -136,21 +150,36 @@ generate(min,max){
 }
 
 check(){
-
-  if(this.op == "+"){
-    console.log("check(+): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
-    if(this.answer == this.num1 + this.num2){
+  if(this.op == "/"){
+    console.log("check(/): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 / this.num2){
       this.result = true;
-      console.log("minus this.result = " + this.result);
       this.score++;
-      this.addscore++;
+      this.divscore++;
     } else {
       this.result = false;
     }
     this.answer = null;
-    this.addtotal++;
+    this.divtotal++;
     this.total++;
-    this.makesub();
+    this.makeadd();
+    return;
+  }
+
+  if(this.op == "*"){
+    console.log("check(*): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 * this.num2){
+      this.result = true;
+      this.score++;
+      this.multscore++;
+    } else {
+      this.result = false;
+    }
+    this.answer = null;
+    this.multtotal++;
+    this.total++;
+    this.makediv();
+    return;
   }
 
   if(this.op == "-"){
@@ -168,37 +197,26 @@ check(){
     this.total++;
     console.log("there!");
     this.makemult();
+    return;
   }
 
-  if(this.op == "*"){
-    console.log("check(*): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
-    if(this.answer == this.num1 * this.num2){
+  if(this.op == "+"){
+    console.log("check(+): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
+    if(this.answer == this.num1 + this.num2){
       this.result = true;
+      console.log("minus this.result = " + this.result);
       this.score++;
-      this.multscore++;
+      this.addscore++;
     } else {
       this.result = false;
     }
     this.answer = null;
-    this.multtotal++;
+    this.addtotal++;
     this.total++;
-    this.makediv();
+    this.makesub();
+    return;
   }
-
-  if(this.op == "/"){
-    console.log("check(/): this.num1 = " +  this.num1 + ", this.num2 = " + this.num2 + ", op = " + this.op);
-    if(this.answer == this.num1 / this.num2){
-      this.result = true;
-      this.score++;
-      this.divscore++;
-    } else {
-      this.result = false;
-    }
-    this.answer = null;
-    this.divtotal++;
-    this.total++;
-    this.makeadd();
-  }
+  console.log("Do I get called?");
  }
 
   toggle(){
