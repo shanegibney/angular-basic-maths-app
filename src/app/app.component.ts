@@ -204,44 +204,22 @@ check(){
   }
 
   restart(){
-    // num1: number = 1;
-    // num2: number = 10;
     this.result = null;
-    // addmin1: number = 1;
-    // addmax1: number = 10;
-    // addmin2: number = 1;
-    // addmax2: number = 10;
-    // submin1: number = 1;
-    // submax1: number = 10;
-    // submin2: number = 1;
-    // submax2: number = 10;
-    // multmin1: number = 1;
-    // multmax1: number = 10;
-    // multmin2: number = 1;
-    // multmax2: number = 10;
-    // divmin1: number = 1;
-    // divmax1: number = 10;
-    // divmin2: number = 1;
-    // divmax2: number = 10;
     this.addtotal = 0;
     this.subtotal = 0;
     this.multtotal = 0;
     this.divtotal = 0;
-    // answer: number;
     this.score = 0;
     this.addscore = 0;
     this.subscore = 0;
     this.multscore = 0;
     this.divscore = 0;
     this.total = 0;
-    // operation: boolean[];
     this.problems = [];
-    // show: boolean = true;
     this.addition = true;
     this.subtraction = false;
     this.multiplication = false;
     this.division = false;
-    // op: string;
     this.negativeanswers = true;
   }
 }
