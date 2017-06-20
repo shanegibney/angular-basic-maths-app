@@ -4,7 +4,6 @@
       <h2>Have a Go Hero Maths!</h2>
     </div>
   </div>
-
   <div class="row">
     <div class="col-md-12" [ngClass]="{'settings': show }">
       <p style="margin-top: 10px; margin-left: 16px;"><button (click)="toggle()" class="btn btn-warning btn-sm">Settings</button> <button (click)="restart()" class="btn btn-warning btn-sm">Restart</button></p>
@@ -62,8 +61,8 @@
               <div class="col-md-2">
                 <p><input [(ngModel)]="subtraction" type="checkbox" /> <i class="fa fa-minus"></i> subtraction</p>
               </div>
-              <div class="col-md-2">
-                <p><input [(ngModel)]="negativeanswers" type="checkbox" [disabled]="!subtraction" />disallow negative answers</p>
+              <div class="col-md-2" style="text-align:left;">
+                <input [(ngModel)]="negativeanswers" type="checkbox" [disabled]="!subtraction" />disallow negative answers
               </div>
               <div class="col-md-2 ">
                 <input class="form-control " type="number" style="width:100px; height:25px; font-size:20px;" [value]="submin1" (input)="submin1 = $event.target.value" [disabled]="!subtraction" />
@@ -127,33 +126,60 @@
   </div>
 
   <div class="row" style="margin-top:10px;">
-    <div class="col-md-3">
-    </div>
+
     <div class="col-md-3" style="text-align:right">
-      <span class="question"><font size="10">{{ num1 }} {{ op }} {{ num2 }} = </font></span>
+      <font size="10>"><span class="question">{{ num1 }}</span>
+        <span *ngIf="op=='/';else symbolnoloop;">
+          &#247;
+        </span>
+        <span class="question">{{ num2 }} = </span></font>
+      <ng-template #symbolnoloop>{{op}}</ng-template>
     </div>
-    <div class="col-md-3" style="text-align:left">
+
+    <div class="col-md-2" style="text-align:left">
       <input class="form-control form-rounded" type="number" style="width:200px; height:50px; font-size:40px; margin-top: 10px;" [value]="answer" (input)="answer = $event.target.value" />
-      <button (click)="check()" class="btn btn-primary btn-lg" style="margin-top:10px;">Check</button>
     </div>
-    <div class="col-md-3">
+
+    <div class="col-md-2">
+      <button (click)="check()" class="btn btn-primary btn-lg" style="margin-top:10px; margin-left: 10px;">Check</button>
+    </div>
+
+    <div class="col-md-4">
+
       <div class="row" *ngIf="total>0">
         <div class="col-md-12 alert alert-warning" *ngIf="result===false" style="text-align:center;">
           <!-- <div *ngFor="let item of problems; let i = index" class="row" style="font-size:30px;"> -->
-          <div *ngFor="let item of problems; let last = last"><span *ngIf="last"><font size="6" color="black">{{item.num1}} {{item.op}} {{item.num2}} = {{item.answer}}</font> <i class="fa wrong fa-times fa-2x" aria-hidden="true"></i></span>
+          <div *ngFor="let item of problems; let last = last">
+            <div *ngIf="last">
+              <font size="6" color="black">{{item.num1}}
+                <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}} <i class="fa wrong fa-times" aria-hidden="true"></i>
+
+                <ng-template #symbol>{{item.op}}</ng-template>
+                <div>
+                  Have another go!
+                </div>
+              </font>
+            </div>
           </div>
-          <font size="6" color="black">Have another go!</font>
         </div>
       </div>
 
       <div class="row">
         <div class="row" *ngIf="result===true">
           <div class="col-md-12 alert alert-warning" style="text-align:center;">
-            <div *ngFor="let item of problems; let last = last"><span *ngIf="last"><font size="6" color="black">{{item.num1}} {{item.op}} {{item.num2}} = {{item.answer}}</font> <i class="fa correct fa-check fa-3x" aria-hidden="true"></i></span>
+            <div *ngFor="let item of problems; let last = last">
+              <div *ngIf="last">
+                <font size="6" color="black">{{item.num1}}
+                  <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}} <i class="fa correct fa-check" aria-hidden="true"></i>
+
+                  <ng-template #symbol>{{item.op}}</ng-template>
+                  <div>Well done! </div>
+                </font>
+              </div>
             </div>
-            <font size="6" color="black">Well done!</font>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -162,24 +188,25 @@
     <div class="col-md-4">
       <div class="row">
         <div class="col-md-12">
-          <div class="row panel panel-primary" *ngIf="total>0">
+          <div class="panel panel-primary" *ngIf="total>0">
             <div class="panel panel-heading">
               Your Answers:
             </div>
-            <div class="panel panel-body">
+            <div class="panel panel-body" style="height: 300px; overflow:auto;">
               <div *ngFor="let item of problems; let i = index" class="row" style="font-size:30px;">
-                <div class="col-md-2" style="text-align:right;">
-                  {{i+1}}.
+                <div class="row">
+                  <div class="col-md-2" style="text-align:right;">
+                    {{i+1}}.
+                  </div>
+                  <div class="col-md-10">
+                    <p style="text-align:left;">
+                      {{item.num1}} <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}}
+                      <span *ngIf="item.result===true"><i class="fa correct fa-check" aria-hidden="true"></i></span>
+                      <span *ngIf="item.result===false"><i class="fa wrong fa-times" aria-hidden="true"></i></span>
+                    </p>
+                    <ng-template #symbol>{{item.op}}</ng-template>
+                  </div>
                 </div>
-                <div class="col-md-10">
-                  <p style="text-align:left;">
-                    {{item.num1}} {{item.op}} {{item.num2}} = {{item.answer}}
-                    <span *ngIf="item.result===true"><i class="fa correct fa-check" aria-hidden="true"></i></span>
-                    <span *ngIf="item.result===false"><i class="fa wrong fa-times" aria-hidden="true"></i></span>
-                  </p>
-                </div>
-                <!-- <div class="col-md-2">
-            </div> -->
               </div>
             </div>
           </div>
@@ -187,43 +214,62 @@
       </div>
     </div>
 
-    <div class="col-md-4">
-      <div class="row">
-        <div class="col-md-12">
-          <div *ngIf="total!=0" style="text-align:center;" class="question totals">
-            <font size="6">Total: {{ score }} correct out of {{ total }}</font>
-            <p *ngIf="addtotal>0">
-              <font size="5">Addition: {{ addscore }} correct out of {{ addtotal }}</font>
-            </p>
-            <p *ngIf="subtotal>0">
-              <font size="5">Subtraction: {{ subscore }} correct out of {{ subtotal }}</font>
-            </p>
-            <p *ngIf="multtotal>0">
-              <font size="5">Multiplication: {{ multscore }} correct out of {{ multtotal }}</font>
-            </p>
-            <p *ngIf="divtotal>0">
-              <font size="5">Division: {{ divscore }} correct out of {{ divtotal }}</font>
-            </p>
+    <div class="col-md-4 ">
+      <div class="row " *ngIf="total!=0 ">
+        <div class="col-md-12 ">
+          <div class="panel panel-primary ">
+            <div style="text-align:left; " class="totals panel panel-heading ">
+              Results:
+            </div>
+            <div class="panel panel-body ">
+              <p>
+                <font size="4 "><strong>Total:</strong> {{ score }} correct out of {{ total }}</font>
+              </p>
+              <hr>
+              <p *ngIf="addtotal>0">
+                <font size="4"><strong>Addition:</strong> {{ addscore }} correct out of {{ addtotal }}</font>
+              </p>
+              <p *ngIf="subtotal>0">
+                <font size="4"><strong>Subtraction:</strong> {{ subscore }} correct out of {{ subtotal }}</font>
+              </p>
+              <p *ngIf="multtotal>0">
+                <font size="4"><strong>Multiplication:</strong> {{ multscore }} correct out of {{ multtotal }}</font>
+              </p>
+              <p *ngIf="divtotal>0">
+                <font size="4"><strong>Division:</strong> {{ divscore }} correct out of {{ divtotal }}</font>
+              </p>
+            </div>
           </div>
-        </div>
-        <div class="col-md-4">
         </div>
       </div>
     </div>
 
+    <div class="col-md-4" *ngIf="total!=0">
+      <div class="row panel panel-primary">
+        <div class=" col-md-12 panel panel-heading">
+          Graph:
+        </div>
+        <div class="col-md-12 panel panel-body">
+          <p>D3 graph of results</p>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div class="row panel panel-primary">
-    <div class=" col-md-12 panel panel-heading">
-      <h3>To do:</h3>
-    </div>
-    <div class="col-md-12 panel panel-body">
-      <ol>
-        <li>Think about layout of page and data</li>
-        <li>Create pdf of stats at any time</li>
-        <li>Email stats to several email addresses</li>
-        <li>D3 graph of results by operator</li>
-      </ol>
+  <div class="row" style="margin-top:100px;">
+    <div class="col-md-4">
+      <div class="row panel panel-warning">
+        <div class=" col-md-12 panel panel-heading">
+          <h3>To do:</h3>
+        </div>
+        <div class="col-md-12 panel panel-body">
+          <ol>
+            <li>Create pdf of stats at any time</li>
+            <li>Email stats to several email addresses</li>
+            <li>D3 graph of results by operator</li>
+          </ol>
+        </div>
+      </div>
     </div>
   </div>
 </div>

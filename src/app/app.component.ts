@@ -39,7 +39,7 @@ export class AppComponent {
   total: number = 0;
   operation: boolean[];
   problems: { num1: number, op: string, num2: number, answer: number, result: boolean}[] = [];
-  show: boolean = true;
+  show: boolean = false;
   addition: boolean = true;
   subtraction: boolean = false;
   multiplication: boolean = false;
@@ -204,6 +204,7 @@ check(){
   }
 
   restart(){
+    this.answer = null;
     this.result = null;
     this.addtotal = 0;
     this.subtotal = 0;
