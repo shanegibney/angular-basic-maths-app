@@ -41,9 +41,9 @@ export class AppComponent {
   problems: { num1: number, op: string, num2: number, answer: number, result: boolean}[] = [];
   show: boolean = false;
   addition: boolean = true;
-  subtraction: boolean = false;
-  multiplication: boolean = false;
-  division: boolean = false;
+  subtraction: boolean = true;
+  multiplication: boolean = true;
+  division: boolean = true;
   op: string;
   negativeanswers: boolean = true;
 
