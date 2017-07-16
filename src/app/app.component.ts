@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, Directive, OnInit, ElementRef, Renderer, Input  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import * as d3 from 'd3';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   num1: number = 1;
   num2: number = 10;
@@ -31,6 +33,7 @@ export class AppComponent {
   multtotal: number = 0;
   divtotal: number = 0;
   answer: number;
+  solution: number;
   score: number = 0;
   addscore: number = 0;
   subscore: number = 0;
@@ -38,8 +41,8 @@ export class AppComponent {
   divscore: number = 0;
   total: number = 0;
   operation: boolean[];
-  problems: { num1: number, op: string, num2: number, answer: number, result: boolean}[] = [];
-  show: boolean = false;
+  problems: { num1: number, op: string, num2: number, answer: number, result: boolean, solution: number}[] = [];
+  show: boolean = true;
   addition: boolean = true;
   subtraction: boolean = true;
   multiplication: boolean = true;
@@ -135,6 +138,7 @@ check(){
     alert("You did not submit an answer. This will be marked as incorrect.");
   }
   if(this.op == "/"){
+    this.solution = this.num1 / this.num2;
     if(this.answer == this.num1 / this.num2){
       this.result = true;
       this.score++;
@@ -142,7 +146,7 @@ check(){
     } else {
       this.result = false;
     }
-    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result, solution: this.solution});
     this.answer = null;
     this.divtotal++;
     this.total++;
@@ -151,6 +155,7 @@ check(){
   }
 
   if(this.op == "*"){
+    this.solution = this.num1 * this.num2;
     if(this.answer == this.num1 * this.num2){
       this.result = true;
       this.score++;
@@ -158,7 +163,7 @@ check(){
     } else {
       this.result = false;
     }
-    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result, solution: this.solution});
     this.answer = null;
     this.multtotal++;
     this.total++;
@@ -167,6 +172,7 @@ check(){
   }
 
   if(this.op == "-"){
+    this.solution = this.num1 - this.num2;
     if(this.answer == this.num1 - this.num2){
       this.result = true;
       this.score++;
@@ -174,7 +180,7 @@ check(){
     } else {
       this.result = false;
     }
-    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result, solution: this.solution});
     this.answer = null;
     this.subtotal++;
     this.total++;
@@ -183,6 +189,7 @@ check(){
   }
 
   if(this.op == "+"){
+    this.solution = this.num1 + this.num2;
     if(this.answer == this.num1 + this.num2){
       this.result = true;
       this.score++;
@@ -190,7 +197,7 @@ check(){
     } else {
       this.result = false;
     }
-    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result});
+    this.problems.push({num1: this.num1, op: this.op, num2: this.num2, answer: this.answer, result: this.result, solution:this.solution});
     this.answer = null;
     this.addtotal++;
     this.total++;
@@ -223,4 +230,30 @@ check(){
     this.division = false;
     this.negativeanswers = true;
   }
+}
+
+@Directive({
+    selector: '[autofocus]'
+})
+export class AutofocusDirective
+{
+    private _autofocus;
+    constructor(private el: ElementRef, private renderer: Renderer)
+    {
+    }
+
+    ngOnInit()
+    {
+    }
+
+    ngAfterViewInit()
+    {
+        if (this._autofocus || typeof this._autofocus === "undefined")
+            this.renderer.invokeElementMethod(this.el.nativeElement, 'focus', []);
+    }
+
+    @Input() set autofocus(condition: boolean)
+    {
+        this._autofocus = condition != false;
+    }
 }

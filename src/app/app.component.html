@@ -126,18 +126,17 @@
   </div>
 
   <div class="row" style="margin-top:10px;">
-
     <div class="col-md-3" style="text-align:right">
-      <font size="10>"><span class="question">{{ num1 }}</span>
-        <span *ngIf="op=='/';else symbolnoloop;">
+      <font size="10"><span class="question">{{ num1 }}</span>
+        <span *ngIf="op=='/';else checksymboldiv;">
           &#247;
-        </span>
-        <span class="question">{{ num2 }} = </span></font>
-      <ng-template #symbolnoloop>{{op}}</ng-template>
+        </span> {{ num2 }} =
+        <ng-template #checksymboldiv><span *ngIf="op==='*';else checksymbolmult;">&#215;</span></ng-template>
+        <ng-template #checksymbolmult>{{op}}</ng-template>
+      </font>
     </div>
-
     <div class="col-md-2" style="text-align:left">
-      <input class="form-control form-rounded" type="number" style="width:200px; height:50px; font-size:40px; margin-top: 10px;" [value]="answer" (input)="answer = $event.target.value" />
+      <input class="form-control form-rounded" type="number" style="width:200px; height:50px; font-size:40px; margin-top: 10px;" [value]="answer" (input)="answer = $event.target.value" [autofocus]/>
     </div>
 
     <div class="col-md-2">
@@ -151,10 +150,16 @@
           <!-- <div *ngFor="let item of problems; let i = index" class="row" style="font-size:30px;"> -->
           <div *ngFor="let item of problems; let last = last">
             <div *ngIf="last">
-              <font size="6" color="black">{{item.num1}}
-                <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}} <i class="fa wrong fa-times" aria-hidden="true"></i>
-
-                <ng-template #symbol>{{item.op}}</ng-template>
+              <font size="5" color="black">{{item.num1}}
+                <span *ngIf="item.op==='/';else checksymboldiv;">&#247;</span> {{item.num2}} &ne; {{item.answer}} <i class="fa wrong fa-times" aria-hidden="true"></i>
+                <ng-template #checksymboldiv><span *ngIf="item.op==='*';else checksymbolmult;">&#215;</span></ng-template>
+                <ng-template #checksymbolmult>{{item.op}}</ng-template>
+                <div style="color:silver;">
+                  The correct solution is:
+                </div>
+                <div style="color:silver;">
+                  {{ item.num1 }} <span *ngIf="item.op==='/';else checksymboldiv;">&#247;</span> {{item.num2 }} = {{ item.solution }}
+                </div>
                 <div>
                   Have another go!
                 </div>
@@ -169,11 +174,11 @@
           <div class="col-md-12 alert alert-warning" style="text-align:center;">
             <div *ngFor="let item of problems; let last = last">
               <div *ngIf="last">
-                <font size="6" color="black">{{item.num1}}
-                  <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}} <i class="fa correct fa-check" aria-hidden="true"></i>
-
-                  <ng-template #symbol>{{item.op}}</ng-template>
-                  <div>Well done! </div>
+                <font size="5" color="black">{{item.num1}}
+                  <span *ngIf="item.op==='/';else checksymboldiv;">&#247;</span> {{item.num2}} = {{item.answer}} <i class="fa correct fa-check" aria-hidden="true"></i>
+                  <ng-template #checksymboldiv><span *ngIf="item.op==='*';else checksymbolmult;">&#215;</span></ng-template>
+                  <ng-template #checksymbolmult>{{item.op}}</ng-template>
+                  <div style="color:green;">Well done!</div>
                 </font>
               </div>
             </div>
@@ -193,21 +198,28 @@
               Your Answers:
             </div>
             <div class="panel panel-body" style="height: 300px; overflow:auto;">
-              <div *ngFor="let item of problems; let i = index" class="row" style="font-size:30px;">
-                <div class="row">
-                  <div class="col-md-2" style="text-align:right;">
-                    {{i+1}}.
-                  </div>
-                  <div class="col-md-10">
-                    <p style="text-align:left;">
-                      {{item.num1}} <span *ngIf="item.op==='/';else symbol;">&#247;</span> {{item.num2}} = {{item.answer}}
-                      <span *ngIf="item.result===true"><i class="fa correct fa-check" aria-hidden="true"></i></span>
-                      <span *ngIf="item.result===false"><i class="fa wrong fa-times" aria-hidden="true"></i></span>
-                    </p>
-                    <ng-template #symbol>{{item.op}}</ng-template>
+              <font size="4">
+                <div *ngFor="let item of problems; let i = index" class="row">
+                  <div class="row">
+                    <div class="col-md-1" style="text-align:right;">
+                      {{i+1}}.
+                    </div>
+                    <div class="col-md-11">
+                      <div style="text-align:left;">
+                        {{item.num1}} <span *ngIf="item.op==='/';else checksymboldiv;">&#247;</span>
+                        <ng-template #checksymboldiv><span *ngIf="item.op==='*';else checksymbolmult;">&#215;</span></ng-template>
+                        <ng-template #checksymbolmult>{{item.op}}</ng-template>
+                        <span *ngIf="item.result===true"> {{item.num2}} = {{item.answer}} <i class="fa correct fa-check" aria-hidden="true"></i></span>
+                        <span *ngIf="item.result===false">{{item.num2}} &ne; {{item.answer}} <i class="fa wrong fa-times" aria-hidden="true"></i></span>
+                        <div style="color:silver;" *ngIf="item.result==false">
+                          ans: {{item.num1}} <span *ngIf="item.op==='/';else checksymboldiv;">&#247;</span> {{item.num2 }} = {{item.solution}}
+                        </div>
+                      </div>
+                      <ng-template #symbol>{{item.op}}</ng-template>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </font>
             </div>
           </div>
         </div>
@@ -223,7 +235,7 @@
             </div>
             <div class="panel panel-body ">
               <p>
-                <font size="4 "><strong>Total:</strong> {{ score }} correct out of {{ total }}</font>
+                <font size="4"><strong>Total:</strong> {{ score }} correct out of {{ total }}</font>
               </p>
               <hr>
               <p *ngIf="addtotal>0">
@@ -266,7 +278,10 @@
           <ol>
             <li>Create pdf of stats at any time</li>
             <li>Email stats to several email addresses</li>
-            <li>D3 graph of results by operator</li>
+            <li>D3 graph of results by operator see <a href="https://youtu.be/x296y5mErWI">here</a></li>
+            <li><a href="https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style">autofocus</a> to input box
+            </li>
+            <li><a href="https://stackoverflow.com/questions/35232731/angular2-scroll-to-bottom-chat-style">autoscroll</a> to bottom of "Your answers:" div</li>
           </ol>
         </div>
       </div>
