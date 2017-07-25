@@ -1,11 +1,12 @@
 import { Component, Directive, OnInit, ElementRef, Renderer, Input  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import * as d3 from 'd3';
+import { D3graphComponent } from './d3graph/d3graph.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 
 export class AppComponent {
@@ -44,14 +45,24 @@ export class AppComponent {
   problems: { num1: number, op: string, num2: number, answer: number, result: boolean, solution: number}[] = [];
   show: boolean = true;
   addition: boolean = true;
-  subtraction: boolean = true;
-  multiplication: boolean = true;
-  division: boolean = true;
+  subtraction: boolean = false;
+  multiplication: boolean = false;
+  division: boolean = false;
   op: string;
   negativeanswers: boolean = true;
+  // details: {}[]= [{name: 'John', addtotal: 'this.addtotal}];
+  values: {name: string, yVal: number}[]= [];
 
   constructor() {
     this.makeadd();
+  }
+
+  arrayBuild(){
+    console.log("arrayBuild() running");
+    this.values = [{name: 'add', yVal: this.addscore}, {name: 'sub', yVal: this.subscore}, {name: 'mult', yVal: this.multscore}, {name: 'div', yVal: this.divscore}];
+    for(let i=0; i<this.values.length; i++){
+      console.log("name: ", this.values[i].name, " yVal: ", this.values[i].yVal);
+    }
   }
 
   makeadd(){
@@ -150,6 +161,7 @@ check(){
     this.answer = null;
     this.divtotal++;
     this.total++;
+    this.arrayBuild();
     this.makeadd();
     return;
   }
@@ -167,6 +179,7 @@ check(){
     this.answer = null;
     this.multtotal++;
     this.total++;
+    this.arrayBuild();
     this.makediv();
     return;
   }
@@ -184,6 +197,7 @@ check(){
     this.answer = null;
     this.subtotal++;
     this.total++;
+    this.arrayBuild();
     this.makemult();
     return;
   }
@@ -201,6 +215,8 @@ check(){
     this.answer = null;
     this.addtotal++;
     this.total++;
+    // this.values[0] = {name: "add", yVal: this.addscore};
+    this.arrayBuild();
     this.makesub();
     return;
   }

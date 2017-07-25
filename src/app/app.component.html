@@ -262,7 +262,11 @@
           Graph:
         </div>
         <div class="col-md-12 panel panel-body">
-          <p>D3 graph of results</p>
+          <!-- <app-d3graph [reviews]="books.bookReviews">Loading graph</app-d3graph>-->
+          <app-d3graph [data]="values">Loading graph</app-d3graph>
+        </div>
+        <div class="col-md-12">
+          <p *ngFor="let item of values">name: {{item.name}} value: {{item.yVal}}</p>
         </div>
       </div>
     </div>

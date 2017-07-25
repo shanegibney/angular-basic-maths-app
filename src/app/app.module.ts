@@ -7,11 +7,14 @@ import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { MyNewComponentComponent } from './my-new-component/my-new-component.component';
+import { D3graphComponent } from './d3graph/d3graph.component';
+import { D3Service } from 'd3-ng2-service';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MyNewComponentComponent
+    MyNewComponentComponent,
+    D3graphComponent
   ],
   imports: [
     NgbModule.forRoot(),
@@ -19,7 +22,7 @@ import { MyNewComponentComponent } from './my-new-component/my-new-component.com
     FormsModule,
     HttpModule,
   ],
-  providers: [],
+  providers: [D3Service],
   bootstrap: [AppComponent, MyNewComponentComponent]
 })
 export class AppModule { }
