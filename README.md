@@ -2,6 +2,8 @@
 
 Check out [gh-pages](https://shanegibney.github.io/angular-basic-maths-app/)
 
+<img width="963" alt="screen shot 2017-08-08 at 00 37 18" src="https://user-images.githubusercontent.com/17167992/29050123-d0f1de1e-7bd1-11e7-92d5-e683f61c000d.png">
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
 ## Development server
