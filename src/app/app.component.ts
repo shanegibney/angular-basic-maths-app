@@ -33,6 +33,10 @@ export class AppComponent {
   subtotal: number = 0;
   multtotal: number = 0;
   divtotal: number = 0;
+  addwrong: number = 0;
+  subwrong: number = 0;
+  multwrong: number = 0;
+  divwrong: number = 0;
   answer: number;
   solution: number;
   score: number = 0;
@@ -41,6 +45,10 @@ export class AppComponent {
   multscore: number = 0;
   divscore: number = 0;
   total: number = 0;
+  addpercent: number;
+  subpercent: number;
+  multpercent: number;
+  divpercent: number;
   operation: boolean[];
   problems: { num1: number, op: string, num2: number, answer: number, result: boolean, solution: number}[] = [];
   show: boolean = true;
@@ -51,15 +59,22 @@ export class AppComponent {
   op: string;
   negativeanswers: boolean = true;
   // details: {}[]= [{name: 'John', addtotal: 'this.addtotal}];
-  values: {name: string, yVal: number}[]= [];
+  values: {name: string, yVal: number, diff: number}[]= [];
+  Math: any;
 
   constructor() {
     this.makeadd();
+    this.Math = Math;
   }
 
   arrayBuild(){
     console.log("arrayBuild() running");
-    this.values = [{name: 'add', yVal: this.addscore}, {name: 'sub', yVal: this.subscore}, {name: 'mult', yVal: this.multscore}, {name: 'div', yVal: this.divscore}];
+    this.values = [
+      {name: 'add', yVal: this.addscore, diff: this.addwrong},
+      {name: 'sub', yVal: this.subscore, diff: this.subwrong},
+      {name: 'mult', yVal: this.multscore, diff: this.multwrong},
+      {name: 'div', yVal: this.divscore, diff: this.divwrong}
+    ];
     for(let i=0; i<this.values.length; i++){
       console.log("name: ", this.values[i].name, " yVal: ", this.values[i].yVal);
     }
@@ -132,7 +147,7 @@ divisionproblem(){
 this.op = "/";
 this.num1 = this.generate(this.divmin1, this.divmax1);
 this.num2 = this.generate(this.divmin2, this.divmax2);
-console.log("this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", modulus: num1/num2 = " + this.num1%this.num2);
+// console.log("this.num1 = " + this.num1 + ", this.num2 = " + this.num2 + ", modulus: num1/num2 = " + this.num1%this.num2);
 if(this.num1%this.num2!=0){
   this.divisionproblem();
 }
@@ -161,6 +176,7 @@ check(){
     this.answer = null;
     this.divtotal++;
     this.total++;
+    this.divwrong = this.divtotal - this.divscore;
     this.arrayBuild();
     this.makeadd();
     return;
@@ -179,6 +195,7 @@ check(){
     this.answer = null;
     this.multtotal++;
     this.total++;
+    this.multwrong = this.multtotal - this.multscore;
     this.arrayBuild();
     this.makediv();
     return;
@@ -197,6 +214,7 @@ check(){
     this.answer = null;
     this.subtotal++;
     this.total++;
+    this.subwrong = this.subtotal - this.subscore;
     this.arrayBuild();
     this.makemult();
     return;
@@ -215,6 +233,7 @@ check(){
     this.answer = null;
     this.addtotal++;
     this.total++;
+    this.addwrong = this.addtotal - this.addscore;
     // this.values[0] = {name: "add", yVal: this.addscore};
     this.arrayBuild();
     this.makesub();
