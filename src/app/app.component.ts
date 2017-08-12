@@ -68,16 +68,16 @@ export class AppComponent {
   }
 
   arrayBuild(){
-    console.log("arrayBuild() running");
+    // console.log("arrayBuild() running");
     this.values = [
       {name: 'add', yVal: this.addscore, diff: this.addwrong},
       {name: 'sub', yVal: this.subscore, diff: this.subwrong},
       {name: 'mult', yVal: this.multscore, diff: this.multwrong},
       {name: 'div', yVal: this.divscore, diff: this.divwrong}
     ];
-    for(let i=0; i<this.values.length; i++){
-      console.log("name: ", this.values[i].name, " yVal: ", this.values[i].yVal);
-    }
+    // for(let i=0; i<this.values.length; i++){
+    //   console.log("name: ", this.values[i].name, " yVal: ", this.values[i].yVal);
+    // }
   }
 
   makeadd(){

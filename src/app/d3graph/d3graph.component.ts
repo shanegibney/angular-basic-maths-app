@@ -108,8 +108,11 @@ export class D3graphComponent implements OnInit, OnChanges {
           .attr('width', 20)
           .attr('fill', 'red');
 
-      moreRects
-      .append("text")
+      moreRects.append("text")
+      .filter(function(d) {
+        console.log("d.yVal: " + d.yVal);
+        console.log("d.diff: " + d.diff);
+        return !isNaN(Math.floor(d.yVal/(d.yVal + d.diff)*100))})
           .attr("x", function(d) { return xScale(d.name) + 35;
            })
           .attr("y", 10)
