@@ -32,7 +32,7 @@ export class D3graphComponent implements OnInit, OnChanges {
             let yVal: number;
             let colors = [];
             let padding: number = 25;
-            let width: number = 500;
+            let width: number = 400;
             let height: number = 150;
             let xScale: any;
             let yScale: any;
@@ -43,6 +43,7 @@ export class D3graphComponent implements OnInit, OnChanges {
       d3.select("svg").remove();
       svg = d3.select(this.parentNativeElement)
           .append('svg')        // create an <svg> element
+          .attr('id','graph')
           .attr('width', width) // set its dimensions
           .attr('height', height);
 
